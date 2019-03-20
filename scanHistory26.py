@@ -16,7 +16,7 @@ from datetime import timedelta
 args = sys.argv[1:]
 
 if len(args) < 4:
-  print 'usage ./scanHistory.py --scan ScanNametoSearch (encompass spaces in search in quotes) --days NumberOfDaysBackToGo'
+  print 'usage ./scanHistory26.py --scan ScanNametoSearch (encompass spaces in search in quotes) --days NumberOfDaysBackToGo'
   sys.exit(1)
 
 sscan = ''
@@ -26,7 +26,7 @@ if args[0] == '--scan':
 
 if args[2] != '--days':
   print 'No --days set.  We will use 30.'  
-  print 'usage ./scanHistory.py --scan ScanNametoSearch (encompass spaces in search in quotes) --days NumberOfDaysBackToGo'
+  print 'usage ./scanHistory26.py --scan ScanNametoSearch (encompass spaces in search in quotes) --days NumberOfDaysBackToGo'
 
 # 	Needed here to get past warning messages when using python 2.6
 from requests.packages.urllib3.exceptions import InsecurePlatformWarning
