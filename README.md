@@ -9,7 +9,7 @@ There is a nasty bug in IO where if a user is deleted, all of their scans go poo
 *usage* `python3 owners3.py`
 
 **Exporting Scan Results:**
-To download a nessus or csv file of results from a scan.
+To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable
 
 *usage* `./ioExportQueue26.py --scan 'scan name' --type nessus or csv`
 
