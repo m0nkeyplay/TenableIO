@@ -64,6 +64,8 @@ from requests.packages.urllib3.exceptions import SNIMissingWarning
 requests.packages.urllib3.disable_warnings(SNIMissingWarning)
 
 # 	Need an app and secret key for the API to work
+#   Read the key from a file
+#   Happy to have suggestions on better ways to do this
 def get_key(keyfile):
   with open(keyfile,'r') as kf:
     line = kf.readline().strip()
@@ -79,8 +81,8 @@ cwd = os.getcwd()
 pickUp_file = open(cwd+'', 'w')
 log_file = open(cwd+'', 'a')
 # Feel free to just put the keys in here
-ak = get_key('../.ssh/ak')
-sk = get_key('../.ssh/sk')
+ak = get_key('')
+sk = get_key('')
 h_key_data = 'accessKey='+ak+'; secretKey='+sk
 check_url = 'https://cloud.tenable.com/scans'
 
@@ -91,8 +93,9 @@ headers = {}
 headers['content-type']= 'application/json'
 headers['x-apikeys']= h_key_data
 
-#	report filter info so we don't get huuuuuge files
+#	  report filter info so we don't get huuuuuge files
 # 	This joke will only be funny in 2018
+#   Add/remove filters as needed
 report_data = '{'
 report_data += '"filter.0.filter":"plugin.id","filter.0.quality":"eq","filter.0.value":"19506"'
 report_data += ',"filter.1.filter":"severity","filter.1.quality":"eq","filter.1.value":"Critical"'
