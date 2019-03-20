@@ -8,7 +8,7 @@
 #
 #	  structure: 	Open get_files
 #				        Write the files to disk (put_files)
-#               Run after ioExportQueue.py
+#               Run after ioExportQueue26.py
 
 #   usage:      run after exports have been queued up for download
 #
