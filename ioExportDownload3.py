@@ -45,6 +45,19 @@ get_files = open(cwd+'/ioExportPickUp.txt', 'r') # Change or keep
 put_files = cwd+'/downloads/' # Change or keep
 check_url = 'https://cloud.tenable.com/scans'
 
+hello = '##########################################################################\n'
+hello +='#2019                                                                    #\n'
+hello +='#                     Tenable IO Export - Download Stage                 #\n'
+hello +='#                     **Run after ioExportSearchQueue3.py                #\n'
+hello +='#                     When this is done... enjoy your data               #\n'
+hello +='#                                                                     ~es#\n'
+hello +='##########################################################################\n'
+
+status_error_message =  'We received an error while checking the export status.\n'
+status_error_message += 'This is different than IO still building your request.\n'
+status_error_message += 'Check the error message below at the API website.\n'
+status_error_message += 'https://cloud.tenable.com/api#/resources/scans/export-status'
+
 proxies = {}
 proxies['https']= ''
 
@@ -57,11 +70,16 @@ def status_check(scan,file):
   url = 'https://cloud.tenable.com/scans/'+scan+'/export/'+file+'/status'
   r = requests.get(url, proxies=proxies, headers=headers)
   data = r.json()
-  if data["status"] == 'loading':
-    print('The file is still being built  Please try again later.')
-    return 'loading'
+  if r.status_code == 200:
+        if data["status"] == 'loading':
+            print('The scan is still loading.  Try again in a bit.')
+            exit()
+        else:
+            return 'gtg'
   else:
-    return 'gtg'
+        print(status_error_message)
+        print('Error code: '+str(r.status_code))
+        exit()
 
 #	Download the files
 def download_report(url,report,con):
@@ -69,9 +87,9 @@ def download_report(url,report,con):
   local_filename = put_files+report+'.'+con
   with open(local_filename, 'wb') as f:
     shutil.copyfileobj(r.raw, f)
-    print('Data downloading...')
+    print('Interweb monkeys are downloading and putting together the pieces of your report(s)...')
 
-
+# Let's do this...
 
 for line in get_files:
     line = line.strip()
@@ -85,5 +103,5 @@ for line in get_files:
     if status_check(scan,file) == 'gtg':
       download_report(download,r_name,ftype)
 
-print('Files are downloaded. Pick them up in '+put_files)
+print('Files are downloaded and pieced together. Pick them up in '+put_files)
 get_files.close()
