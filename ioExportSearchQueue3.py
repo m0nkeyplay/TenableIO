@@ -3,8 +3,8 @@
 #
 # 	purpose: 	Queue Up Scan Data for download based on plugin ids from the lastest scan based on name and plugin id
 #
-#	structure: 	Get the latest history and queue up the nessus file
-#				Write to a file to pick up in a few minutes from IO
+#	  structure: 	Get the latest history and queue up the nessus file
+#				        Write to a file to pick up in a few minutes from IO
 #
 #   usage:      python3 ioExportSearchQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --p PLUGINID | --f /path/to/file
 #
@@ -47,9 +47,10 @@ hello +='#                     When this is done run ioExportDownload3.py       
 hello +='#                                                                        #\n'
 hello +='##########################################################################\n'
 
-goodbye ='No errors. In a few run ioExportDownload3.py and you should get the data you need.'
+goodbye ='Scan(s) queued for export.\nNo errors received.\nIn a few run ioExportDownload3.py and you should get the data you need.'
 
-usage = '****Scan did not run.****\n\nusage% python3 ioExportSearchQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --p PLUGINID | --f /path/to/file\n                    ** for some silly reason the quotes must be double quotes if running on Windows'
+usage = '****Scan did not run.****\n\nusage% python3 ioExportSearchQueue3.py' 
+usage += ' --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --p PLUGINID | --f /path/to/file\n                    ** for some silly reason the quotes must be double quotes if running on Windows'
 
 # We are creating the search string with the function if we are getting the data from a file
 def create_search(file):
@@ -173,7 +174,7 @@ def parse_json(url,scan):
       scan_history(scan_url,s_name,s_id)
 
 print(hello)
-print('We will be looking for "'+sscan+ '" scans.')
+print('Internet aliens have been dispatched to search "'+sscan+ '" scans for your data.')
 print('Output will be: '+stype)
 parse_json(check_url,sscan)
 pickUp_file.close()
