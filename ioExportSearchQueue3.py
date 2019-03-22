@@ -61,6 +61,7 @@ def create_search(file):
         searchFor += '"filter.'+str(x)+'.filter":"plugin.id","filter.'+str(x)+'.quality":"eq","filter.'+str(x)+'.value":"'+line+'",'
         x += 1
     return searchFor
+    pluginFile.close()
 
 
 #   Check the input data
