@@ -151,8 +151,8 @@ def scan_history(url,s_name,scan_id):
             break
         else:
             print('Something went wrong with the request to IO for '+post_url)
-            print(p.status_code)
-            break
+            print('Here is the status code: '+p.status_code)
+            exit()
 
   else:
     print('We should put a log here to say why it did not work...')
