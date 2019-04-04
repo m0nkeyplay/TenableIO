@@ -52,6 +52,8 @@ goodbye ='Scan(s) queued for export.\nNo errors received.\nIn a few run ioExport
 usage = '****Scan did not run.****\n\nusage% python3 ioSearchPluginQueue3.py' 
 usage += ' --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --h HOSTNAME | --f /path/to/file\n                    ** for some silly reason the quotes must be double quotes if running on Windows'
 
+searchError = '??We need a hostname or a file of hostnames to search for??'
+
 # We are creating the search string with the function if we are getting the data from a file
 def create_search(file):
     x = 0
@@ -93,7 +95,7 @@ if args[2] == '--type':
   else:
     stype = args[3].strip()
 
-# Search for one plugin or a file full
+# Search for one hostname or a file full
 searchT = ''
 if args[4] == '--h':
     searchT = '"filter.0.filter":"host.hostname","filter.0.quality":"match","filter.0.value":"'+args[5].strip()+'",'
@@ -101,7 +103,7 @@ elif args[4] == '--f':
     sFile = args[5]
     searchT = create_search(sFile)
 else:
-    print('We need a plugin or a file of plugins to search for.')
+    print(searchError)
     print(usage)
     exit()
 
