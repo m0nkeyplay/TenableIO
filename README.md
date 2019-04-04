@@ -18,7 +18,7 @@ There is a nasty bug in IO where if a user is deleted, all of their scans go poo
 
 ----
 
-**Searching and Exporting Scan Results - with options and in python3:**
+**Searching and Exporting Scan Results**
 Search for one or a list of plugins/hostnames in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py is good to queue up for a nighltly download (and will be replaced by a python3 soon)- this is geared more to a fire drill.
 
 > ioSearchScansQueue3.py
