@@ -18,19 +18,6 @@ There is a nasty bug in IO where if a user is deleted, all of their scans go poo
 
 ----
 
-**Exporting Scan Results:**
-To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable
-> ioExportQueue26.py
-
-> ioExportDownload26.py
-
-
-*usage* `./ioExportQueue26.py --scan 'scan name' --type nessus or csv`
-
-*usage* `./ioExportDownload26.py`
-
-----
-
 **Searching and Exporting Scan Results - with options and in python3:**
 Search for one or a list of plugins/hostnames in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py is good to queue up for a nighltly download (and will be replaced by a python3 soon)- this is geared more to a fire drill.
 
@@ -58,6 +45,28 @@ Search for one or a list of plugins/hostnames in a scan or multiple scans and th
 > ioExportDownload3.py
 
 **Download the search results**  *usage* `python3 ioExportDownload3.py`
+
+----
+
+**Just Exporting Scan Results:**
+To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable.  This is good for a batch job to get data where the search script is good for ~~firedrill~~ pinpointing data.
+> ioExportQueue26.py
+
+> ioExportDownload26.py
+
+*usage* `./ioExportQueue26.py --scan 'scan name' --type nessus or csv`
+
+*usage* `./ioExportDownload26.py`
+
+Python3:
+
+> ioExportScanQueue3.py
+
+> ioExportDownload3.py
+
+*usage* `python ioExportScanQueue3.py --scan 'scan name' --type nessus or csv`
+
+*usage* `python3 ioExportDownload3.py`
 
 ----
 
