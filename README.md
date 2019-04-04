@@ -34,21 +34,30 @@ To download a nessus or csv file of results from a scan. Gets Critical, High Med
 **Searching and Exporting Scan Results - with options and in python3:**
 Search for one or a list of plugins/hostnames in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  I will be working to combine them all with switches, but there are just so many at this point it seems easier to keep them separate. While ioExportQueue26.py is good to queue up for a nighltly download (and will be replaced by a python3 soon)- this is geared more to a fire drill.
 
-> ioSearchPluginQueue3.py
+> ioSearchScansQueue3.py
 
-> ioSearchHostnameQueue3.py
+*usage* `python3 ioSearchScansQueue3 -scan ScanNametoSearch -o nessus|csv -q plugin|hostname -d PLUGINID|HOSTNAME | -f /path/to/file`
 
-**Search plugins - returns data on all hosts in the scan with x plugin(s)**  
-*usage* `python3 ioSearchPluginQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --p PLUGINID | --f /path/to/file`
+******switchs:******    
 
-**Search hostnames - returns all data on all host(s) in the specified scan**  
-*usage* `python3 ioSearchHostnameQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --h HOSTNAME | --f /path/to/file`
+               -scan       Search this specific scan 
+               -o          Output Type options:  nessus, csv
+               -q          Query Type options:  plugin, hostname
+               -d or -f    -d for one...   example: -q plugin -d 19506
+                           -f for file...  -f /path/to/file              
 
-**Search description field** *(coming soon)*
+******notes:******      fill in the following variables as needed per environment
+
+               pickUp_file     <-- Where the export data goes to be picked up
+               ak              <-- Access Key
+               sk              <-- Secret Key
+               proxies         <-- If you use a proxy, set it here.
+               report_data     <-- Build the request for the report
+
 
 > ioExportDownload3.py
 
-Download is the same for each  *usage* `python3 ioExportDownload3.py`
+**Download the search results**  *usage* `python3 ioExportDownload3.py`
 
 ----
 
