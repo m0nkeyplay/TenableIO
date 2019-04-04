@@ -50,7 +50,7 @@ hello +='#######################################################################
 goodbye ='Scan(s) queued for export.\nNo errors received.\nIn a few run ioExportDownload3.py and you should get the data you need.'
 
 usage = '****Scan did not run.****\n\nusage% python3 ioSearchPluginQueue3.py' 
-usage += ' --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --h HOSTNAME | --f /path/to/file\n                    ** for some silly reason the quotes must be double quotes if running on Windows'
+usage += ' --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --h HOSTNAME | --f /path/to/file\n'                    ** for some silly reason the quotes must be double quotes if running on Windows'
 
 searchError = '??We need a hostname or a file of hostnames to search for??'
 
