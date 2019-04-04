@@ -32,16 +32,21 @@ To download a nessus or csv file of results from a scan. Gets Critical, High Med
 ----
 
 **Searching and Exporting Scan Results - with options and in python3:**
-Search for one or a list of plugins in a scan or multiple scans and then download them.  This one came about because people needed specific plugin info on a large scale, quickly.  While ioExportQueue26.py is good to queue up for a nighltly download - this is geared more to a fire drill.
+Search for one or a list of plugins/hostnames in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  I will be working to combine them all with switches, but there are just so many at this point it seems easier to keep them separate. While ioExportQueue26.py is good to queue up for a nighltly download (and will be replaced by a python3 soon)- this is geared more to a fire drill.
 
 > ioSearchPluginQueue3.py
 
-> ioExportDownload3.py
+> ioSearchHostnameQueue3.py
 
-**Search plugins**  
+**Search plugins - returns data on all hosts in the scan with x plugin(s)**  
 *usage* `python3 ioSearchPluginQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --p PLUGINID | --f /path/to/file`
 
+**Search hostnames - returns all data on all host(s) in the specified scan**  
+*usage* `python3 ioSearchHostnameQueue3.py --scan ScanNametoSearch (encompass spaces in search in quotes) --type nessus|csv --h HOSTNAME | --f /path/to/file`
+
 **Search description field** *(coming soon)*
+
+> ioExportDownload3.py
 
 Download is the same for each  *usage* `python3 ioExportDownload3.py`
 
