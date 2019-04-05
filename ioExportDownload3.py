@@ -1,7 +1,9 @@
+#!usr/bin/env python3
+
 # 	author:  	https://github.com/m0nkeyplay/
 # 	file Date: 	2019-03-21
 #
-# 	purpose: 	Download reports queued up from ioExportSearchQueue3.py
+# 	purpose: 	Download reports queued up from an export queue
 #
 #
 #	structure: 	Open get_files
