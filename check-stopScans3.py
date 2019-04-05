@@ -1,3 +1,5 @@
+#!usr/bin/env python3
+
 # 	author:  	https://github.com/m0nkeyplay/
 # 	file Date: 	2019-03-27
 #
