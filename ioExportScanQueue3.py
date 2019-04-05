@@ -1,3 +1,5 @@
+#!usr/bin/env python3
+
 #	author:		https://github.com/m0nkeyplay
 #   license:    use this if it works for you 
 #   file Date:  2019-04-04
