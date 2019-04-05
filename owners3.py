@@ -1,3 +1,5 @@
+#!usr/bin/python3
+#
 # 	author:  	author:  	https://github.com/m0nkeyplay
 # 	file Date: 	2019-03-20 
 #
@@ -46,7 +48,7 @@ headers['content-type']= 'application/json'
 headers['x-apikeys']= h_key_data
 
 
-def parse_json(url,scan):
+def parse_json(url):
   r = requests.get(url, proxies=proxies, headers=headers)
   data = r.json()
   for d in data["scans"]:
@@ -59,6 +61,6 @@ def parse_json(url,scan):
 
 #   Get to work
 log_file.write('Scan Name, Scan Type, Owner\n')
-parse_json(check_url,sscan)
+parse_json(check_url)
 log_file.close()
 
