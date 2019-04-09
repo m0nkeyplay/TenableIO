@@ -1,19 +1,20 @@
 #!usr/bin/env python3
-
-# 	author:  	https://github.com/m0nkeyplay/
-# 	file Date: 	2019-04-04
 #
-# 	purpose: 	Queue Up Scan Data for download based on plugins or hostnames from the lastest scan based on scan name
+#
+# 	author:  	https://github.com/m0nkeyplay/
+# 	file Date: 	2019-04-09
+#
+# 	purpose: 	Queue Up Scan Data for download from the lastest scan based on scan name
 #
 #	  structure: 	Get the latest history and queue up the nessus file
 #				        Write to a file to pick up in a few minutes from IO
 #
-#   usage:      -scan ScanNametoSearch -o nessus|csv -q plugin|hostname -d PLUGINID|HOSTNAME | -f /path/to/file
+#   usage:      -scan ScanNametoSearch -o nessus|csv -q filterQuery -d databpoint | -f /path/to/file
 #
 #   switchs:    -scan       Search this specific scan
 #               -o          Output Type options:  nessus, csv
-#               -q          Query Type options:  plugin, hostname
-#               -d or -f    -d for one...   example: -q plugin -d 19506
+#               -q          Query Type options:  pluginid, pluginname, hostname
+#               -d or -f    -d for one...   example: -q pluginid -d 19506
 #                           -f for file...  -f /path/to/file              
 #
 #   notes:      fill in the following variables as needed per environment
@@ -60,31 +61,38 @@ hello +='#######################################################################
 goodbye ='No errors received.\nExport of results is queued up.\nIn a few minutes run ioExportDownload3.py and you should get the data you need.'
 
 usage = '****Scan did not run.****\n\nusage% python3 ioSearchScansQueue3.py' 
-usage += ' -scan ScanNametoSearch -o nessus|csv -q plugin|hostname -d PLUGINID|HOSTNAME | -f /path/to/file\n'
-usage += '\nswitchs:\n-scan       Search this specific scan (encompass spaces in search in quotes) '
-usage += ' ** for some silly reason the quotes must be double quotes if running on Windows'
+usage += ' -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file\n'
+usage += '\nswitchs:\n-scan       Search this specific scan *see below '
 usage += '\n-o          Output Type options:  nessus, csv'
-usage += '\n-q          Query Type options:  plugin, hostname'
+usage += '\n-q          Query Type options:  pluginid, pluginname, hostname'
 usage += '\n-d or -f    '
-usage += '\n            -d for one...   example: -q plugin -d 19506'
-usage += '\n            -f for file...  -f /path/to/file'     
+usage += '\n            -d for one...   example: -q pluginid -d 19506'
+usage += '\n            -f for file...  example: -q pluginid -f /path/to/file/with/a/list/of/pluginids'
+usage+=  '\n            *anything with a space needs to be quoted - double quotes if running on Windows'     
 
 searchError = 'Error: We need either a data point or a file to search through.\n'
 
+#   Dictionary of API filters to search on
+#   Structure - [what are we getting from the user] (tenable calls it,how to search it)
+#   Add your own:  https://cloud.tenable.com/api#/resources/scans/export-request
+
+apiFilter = {}
+apiFilter['pluginid'] = ('plugin.id','eq')
+apiFilter['pluginname'] = ('plugin.name','match')
+apiFilter['hostname'] = ('host.hostname','match')
+
 #   We are creating the search string with the function if we are getting the data from a file
-#   This will be updated as more search fields are added
+#   Takes the query, matches it to the dictionary item and away we go
 def create_search(file,q):
     x = 0
     searchFor = ''
     queryFile = open(sFile,'r')
     for line in queryFile:
         lineStripped = line.strip()
-        if query == 'plugin':
-            searchFor += '"filter.'+str(x)+'.filter":"plugin.id","filter.'+str(x)+'.quality":"eq","filter.'+str(x)+'.value":"'+lineStripped+'",'
-        elif query == 'hostname':
-            searchFor += '"filter.'+str(x)+'.filter":"host.hostname","filter.'+str(x)+'.quality":"match","filter.'+str(x)+'.value":"'+lineStripped.lower()+'",'
+        if query in apiFilter.keys():
+            searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'+str(x)+'.quality":"'+apiFilter[query][0]+'","filter.'+str(x)+'.value":"'+lineStripped+'",'
         else:
-            print('The search builder went wrong.')
+            print('We are currently not searching on '+query+'.  You can make it happen by updating the script, or choose from one of of our predefined query options.')
             exit()
         x += 1
     queryFile.close()
@@ -98,7 +106,7 @@ def create_search(file,q):
 
 args = argv[1:]
 if len(args) < 8:
-  print('We are missing some things here.')
+  print('!!!!! We are missing some things here.')
   print(usage)
   exit(1)
 
@@ -111,13 +119,13 @@ if args[0] == '-scan':
   
 #   Output Type
 if args[2] != '-o':
-  print('Output switch is needed -o')  
+  print('!!!!! Output switch is needed -o')  
   print(usage)
   exit()
 
 if args[2] == '-o':
   if args[3] != 'csv' and args[3] != 'nessus':
-    print('Scan output type options are csv and nessus.')
+    print('!!!!! Scan output type options are csv and nessus.')
     print(usage)
     exit()
   else:
@@ -126,23 +134,21 @@ if args[2] == '-o':
 #   What we are querying.  This will grow    
 query = ''
 if args[4] == '-q':
-    if args[5] != 'plugin' and args[5] != 'hostname':
-        print('Query can be plugin or hostname')
+    if args[5] not in apiFilter.keys():
+        print('!!!!! Query not supported.  Please use a supported query.')
         print(usage)
         exit() 
     else:
         query = args[5].strip()
 
 # Data point or File
+# Remember that dictionary.  We are using it here too.
 searchT = ''    
 if args[6] == '-d':
-    if query == 'plugin':
-        searchT = '"filter.0.filter":"plugin.id","filter.0.quality":"eq","filter.0.value":"'+args[7].strip()+'",'
-    elif query == 'hostname':
-        lowered = args[7].strip().lower()
-        searchT = '"filter.0.filter":"host.hostname","filter.0.quality":"match","filter.0.value":"'+lowered+'",'
+    if query in apiFilter.keys():
+        searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+args[7].strip()+'",'
     else:
-        print('Query error for a single data point')
+        print('!!!! Query error for a single data point.  We should have caught this earlier.')
         exit()
 elif args[6] == '-f':
     sFile = args[7]
@@ -162,7 +168,7 @@ h_key_data = 'accessKey='+ak+'; secretKey='+sk
 check_url = 'https://cloud.tenable.com/scans'
 
 proxies = {}
-proxies['https']= '' # fill me in if needed
+proxies['https']= ''
 
 headers = {}
 headers['content-type']= 'application/json'
