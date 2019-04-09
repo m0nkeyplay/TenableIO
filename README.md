@@ -31,7 +31,7 @@ Query filters are currently pluginid, pluginname, and hostname.  Add as needed i
 
                -scan       Search this specific scan 
                -o          Output Type options:  nessus, csv
-               -q          Query Type options:  pluginid, pluginname, hostname
+               -q          Query Type options:  pluginid, pluginname, hostname, cve
                -d or -f    -d for one...   example: -q pluginid -d 19506
                                            example: -q pluginid -f /path/to/file/with/a/list/of/pluginids              
 
