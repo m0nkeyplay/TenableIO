@@ -23,8 +23,6 @@
 #               ak              <-- Access Key
 #               sk              <-- Secret Key
 #               proxies         <-- If you use a proxy, set it here.
-#               report_data     <-- Build the request for the report
-#                                   https://cloud.tenable.com/api#/resources/scans/export-request
 #
 
 import requests
