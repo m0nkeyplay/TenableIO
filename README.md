@@ -21,17 +21,19 @@ There is a nasty bug in IO where if a user is deleted, all of their scans go poo
 **Searching and Exporting Scan Results**
 Search for one or a list of plugins/hostnames in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py is good to queue up for a nighltly download (and will be replaced by a python3 soon)- this is geared more to a fire drill.
 
+Query filters are currently pluginid, pluginname, and hostname.  Add as needed in a dictionary in the script.
+
 > ioSearchScansQueue3.py
 
-*usage* `python3 ioSearchScansQueue3 -scan ScanNametoSearch -o nessus|csv -q plugin|hostname -d PLUGINID|HOSTNAME | -f /path/to/file`
+*usage* `python3 ioSearchScansQueue3 -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file`
 
 ******switchs:******    
 
                -scan       Search this specific scan 
                -o          Output Type options:  nessus, csv
-               -q          Query Type options:  plugin, hostname
-               -d or -f    -d for one...   example: -q plugin -d 19506
-                           -f for file...  -f /path/to/file              
+               -q          Query Type options:  pluginid, pluginname, hostname
+               -d or -f    -d for one...   example: -q pluginid -d 19506
+                                           example: -q pluginid -f /path/to/file/with/a/list/of/pluginids              
 
 ******notes:******      fill in the following variables as needed per environment
 
@@ -39,7 +41,6 @@ Search for one or a list of plugins/hostnames in a scan or multiple scans and th
                ak              <-- Access Key
                sk              <-- Secret Key
                proxies         <-- If you use a proxy, set it here.
-               report_data     <-- Build the request for the report
 
 
 > ioExportDownload3.py
