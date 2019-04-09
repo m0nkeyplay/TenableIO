@@ -13,7 +13,7 @@
 #
 #   switchs:    -scan       Search this specific scan
 #               -o          Output Type options:  nessus, csv
-#               -q          Query Type options:  pluginid, pluginname, hostname
+#               -q          Query Type options:  pluginid, pluginname, hostname, cve
 #               -d or -f    -d for one...   example: -q pluginid -d 19506
 #                           -f for file...  -f /path/to/file              
 #
@@ -62,7 +62,7 @@ usage = '****Scan did not run.****\n\nusage% python3 ioSearchScansQueue3.py'
 usage += ' -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file\n'
 usage += '\nswitchs:\n-scan       Search this specific scan *see below '
 usage += '\n-o          Output Type options:  nessus, csv'
-usage += '\n-q          Query Type options:  pluginid, pluginname, hostname'
+usage += '\n-q          Query Type options:  pluginid, pluginname, hostname, cve'
 usage += '\n-d or -f    '
 usage += '\n            -d for one...   example: -q pluginid -d 19506'
 usage += '\n            -f for file...  example: -q pluginid -f /path/to/file/with/a/list/of/pluginids'
@@ -78,6 +78,7 @@ apiFilter = {}
 apiFilter['pluginid'] = ('plugin.id','eq')
 apiFilter['pluginname'] = ('plugin.name','match')
 apiFilter['hostname'] = ('host.hostname','match')
+apiFilter['cve'] = ('plugin.attributes.cve.raw','match')
 
 #   We are creating the search string with the function if we are getting the data from a file
 #   Takes the query, matches it to the dictionary item and away we go
