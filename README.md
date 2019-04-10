@@ -9,21 +9,26 @@ Files ending in 26 are written for Python 2.6 Files ending in 3 are written for 
 
 ## Scripts and what they do
 
+> owners3.py
+
 **Scan Owners:**
 There is a nasty bug in IO where if a user is deleted, all of their scans go poof!  While this is being worked on getting a list of who owns a scan can help move things around since the GUI doesn't provide an easy way to batch see this.
-
-> owners3.py
 
 *usage* `python3 owners3.py`
 
 ----
 
-**Searching and Exporting Scan Results**
-Search for one or a list of plugins/hostnames/cves in a scan or multiple scans and then download them.  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py and ioExportScanQueue3.py are good to queue up for a nighltly download - this is geared more to a fire drill.
-
-Query filters are currently pluginid, pluginname, cve and hostname.  Add as needed in a dictionary in the script.
-
 > ioSearchScansQueue3.py
+
+**Search for one or a list of plugins/hostnames/risk factors/compliance checks in a scan or multiple scans and then download them.**  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py and ioExportScanQueue3.py are good to queue up for a nighltly download - this is geared more to a fire drill.  When done, download the results with the script below.
+
+Query filters are listed below. Add as needed in a dictionary in the script.
+
+1. pluginid
+2. pluginname
+3. hostname
+4. riskfactor
+5. compliancecheck  
 
 *usage* `python3 ioSearchScansQueue3 -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file`
 
@@ -31,7 +36,7 @@ Query filters are currently pluginid, pluginname, cve and hostname.  Add as need
 
                -scan       Search this specific scan 
                -o          Output Type options:  nessus, csv
-               -q          Query Type options:  pluginid, pluginname, hostname, cve
+               -q          Query Type options:  pluginid, pluginname, hostname, riskfactor, compliancecheck
                -d or -f    -d for one...   example: -q pluginid -d 19506
                                            example: -q pluginid -f /path/to/file/with/a/list/of/pluginids              
 
@@ -48,41 +53,30 @@ Query filters are currently pluginid, pluginname, cve and hostname.  Add as need
 **Download the search results**  *usage* `python3 ioExportDownload3.py`
 
 ----
-
-**Just Exporting Scan Results:**
-To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable.  This is good for a batch job to get data where the search script is good for ~~firedrill~~ pinpointing data.
-> ioExportQueue26.py
-
-> ioExportDownload26.py
-
-*usage* `./ioExportQueue26.py --scan 'scan name' --type nessus or csv`
-
-*usage* `./ioExportDownload26.py`
-
-Python3:
-
 > ioExportScanQueue3.py
 
 > ioExportDownload3.py
+
+**Just Exporting Scan Results:**
+To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable.  This is good for a batch job to get data where the search script is good for ~~firedrill~~ pinpointing data.
 
 *usage* `python ioExportScanQueue3.py --scan 'scan name' --type nessus or csv`
 
 *usage* `python3 ioExportDownload3.py`
 
 ----
+> scanHistory26.py
 
 **Scan History:**
 This script will provide Scan Name, Completion Status, Start Time, End Time for requested scans for requested time frame back.
 Data is shown on screen and in a tidy CSV file.
 
-> scanHistory26.py
-
 *usage* `./scanHistory26.py --scan ScanNametoSearch (encompass spaces in search in quotes) --days NumberOfDaysBackToGo`
 
 -----
+> check-stopScans3.py
+
 **Stop long scans:**
 This script is good to run as a task.  If scans can't run into business hours and you don't want to get up and look to see if they are running - add this as a cron job and it will check for you, stop as needed and log that it did it. 
-
-> check-stopScans3.py
 
 *usage* `python3 check-stopScans3.py --scan "Scan Name" (encompass spaces in search in quotes)`
