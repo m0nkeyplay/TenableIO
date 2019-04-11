@@ -90,7 +90,7 @@ def create_search(file,q):
     for line in queryFile:
         lineStripped = line.strip()
         if query in apiFilter.keys():
-            searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'+str(x)+'.quality":"'+apiFilter[query][0]+'","filter.'+str(x)+'.value":"'+lineStripped+'",'
+            searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'+str(x)+'.quality":"'+apiFilter[query][1]+'","filter.'+str(x)+'.value":"'+lineStripped+'",'
         else:
             print('We are currently not searching on '+query+'.  You can make it happen by updating the script, or choose from one of of our predefined query options.')
             exit()
