@@ -57,6 +57,12 @@ Query filters are listed below. Add as needed in a dictionary in the script.
 
 > ioExportDownload3.py
 
+**Now in interactive mode**
+
+> ioInteractiveScanSearch.py
+
+Run the scan search, answer some questions and download in one interactive script.  *usage* `python3 ioInteractiveScanSearch.py`
+
 **Just Exporting Scan Results:**
 To download a nessus or csv file of results from a scan. Gets Critical, High Medium and Scan Information This can be changed by modifying the report_data variable.  This is good for a batch job to get data where the search script is good for ~~firedrill~~ pinpointing data.
 
