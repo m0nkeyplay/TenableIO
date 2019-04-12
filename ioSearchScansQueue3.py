@@ -214,7 +214,7 @@ def parse_json(url,scan):
   r = requests.get(url, proxies=proxies, headers=headers)
   if r.status_code != 200:
     print('Error - if the code below is 401 - there was a login issue.\nCheck your keys.')
-    print(r.status_code())
+    print(str(r.status_code))
     exit()
 
   data = r.json()
