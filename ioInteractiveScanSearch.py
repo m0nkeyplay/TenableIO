@@ -178,7 +178,7 @@ def parse_json(url,scan):
   r = requests.get(url, proxies=proxies, headers=headers)
   if r.status_code != 200:
     print('Error - IO Error Code Below:')
-    print(r.status_code())
+    print(str(r.status_code))
     exit()
   data = r.json()
   for d in data["scans"]:
