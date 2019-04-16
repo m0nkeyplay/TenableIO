@@ -4,6 +4,7 @@
 
 Query filters are listed below. Add as needed in a dictionary in the script.
 
+
 1. pluginid
 2. pluginname
 3. hostname
