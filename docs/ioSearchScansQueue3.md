@@ -1,3 +1,4 @@
+***4/21/2019 - This file has been replaced by ioSearchDownloadScans.py - putting the search and download into the same file.  All updates will happen there.  This file is here in case anyone was using it and still needs it***
 > ioSearchScansQueue3.py
 
 **Search for one or a list of plugins/hostnames/risk factors/compliance checks in a scan or multiple scans and then download them.**  This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py and ioExportScanQueue3.py are good to queue up for a nighltly download - this is geared more to a fire drill.  When done, download the results with the script below.
