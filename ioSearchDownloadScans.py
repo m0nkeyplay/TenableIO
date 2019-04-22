@@ -4,7 +4,7 @@
 # 	author:  	https://github.com/m0nkeyplay/
 # 	file Date: 	2019-04-21
 #
-# 	purpose: 	Queue Up Scan Data for download from the lastest scan based on scan name
+# 	purpose: 	Queue Up and download scan data from the lastest scan based on scan name
 #
 #	  structure: 	Get the latest history and queue up the nessus file
 #				        Write to a file to pick up in a few minutes from IO
