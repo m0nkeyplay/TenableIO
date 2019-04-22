@@ -13,7 +13,8 @@
 #               proxies         <-- If you use a proxy, set it here.
 #
 #   updates:    random file for queuing added so things can be done more than one time
-#               also added the timecode to the results so they don't overwrite
+#               also added the timecode to the results so they don't overwrite when using this more often and files 
+#               stil in downloads folder
 
 import requests
 import json
