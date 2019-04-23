@@ -173,7 +173,7 @@ def parse_json(url,scan):
       scan_history(scan_url,s_name,s_id)
 
 
-
+print(hello)
 parse_json(check_url,sscan)
 pickUp_file.close()
 print(intermission)
