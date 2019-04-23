@@ -7,4 +7,14 @@ Use at will.  Make better at will.  There are variables that need to be set in e
 
 Files using python 2.6 are noted as ending in 2.6.  All others tested in 3.5+.
 
-## Scripts and what they do are noted in respective readme files in the docs/ directory.
+### Scripts in action
+
+Read Me files located in the docs/ directory 
+
+> ioInteractiveScanSearch.py
+
+[![asciicast](https://asciinema.org/a/242421.svg)](https://asciinema.org/a/242421)
+
+> ioSearchDownloadScans.py
+
+[![asciicast](https://asciinema.org/a/242426.svg)](https://asciinema.org/a/242426)
