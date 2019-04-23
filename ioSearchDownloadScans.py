@@ -19,7 +19,8 @@
 #
 #   notes:      fill in the following variables as needed per environment
 #
-#               pickup_file     <-- Where the export data goes to be picked up
+#               put_files       <-- Where do you want the exports to download
+#                                   default is inside the downloads folder attached to this repo
 #               ak              <-- Access Key
 #               sk              <-- Secret Key
 #               proxies         <-- If you use a proxy, set it here.
@@ -66,7 +67,7 @@ intermission ='Requests sent.\nNo errors received.\nExport of results is queued 
 
 #goodbye ='No errors received.\nExport of results is queued up.\nIn a few minutes run ioExportDownload3.py and you should get the data you need.'
 
-usage = '\n usage% python3 ioSearchScansQueue3.py'
+usage = '\n usage% python3 ioSearchDownloadScans.py'
 usage += ' -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file\n'
 usage += '\nswitchs:\n-scan       Search this specific scan *see below '
 usage += '\n-o          Output Type options:  nessus, csv'
