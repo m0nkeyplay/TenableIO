@@ -226,17 +226,17 @@ while oType:
 filterType = True
 while filterType:
     filterMenu()
-    choice = input('Please choose an output type: ')
+    choice = input('Please choose a filter type: ')
     if choice in apiFilter.keys():
         query = choice
         break
     else:
-        print('--Query not supported.\nWe are currently not searching on '+choice+'. '+queryExtra)
+        print('--Filter not supported.\nWe are currently not searching on '+choice+'. '+queryExtra)
 
 qType = True
 while qType:
     queryMenu()
-    choice = input('Please choose an output type: ')
+    choice = input('Please choose a data type: ')
     if choice == 'datapoint' or choice == 'file':
         oneOrMany = choice
         break
@@ -247,7 +247,7 @@ dts = oneOrMany
 # data to search
 searchT = ''
 if dts == 'datapoint':
-    criteria = input('Great. Datapoint: ')
+    criteria = input('Great. What is your datapoint: ')
     if query in apiFilter.keys():
         searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'
         searchT += apiFilter[query][1]+'","filter.0.value":"'+criteria.strip()+'",'
