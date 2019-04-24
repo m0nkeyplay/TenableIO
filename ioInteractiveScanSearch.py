@@ -236,7 +236,7 @@ while filterType:
 qType = True
 while qType:
     queryMenu()
-    choice = input('Please choose a data type: ')
+    choice = input('Please choose a data query type: ')
     if choice == 'datapoint' or choice == 'file':
         oneOrMany = choice
         break
