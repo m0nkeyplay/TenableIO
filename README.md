@@ -13,7 +13,7 @@ Read Me files located in the docs/ directory
 
 > ioInteractiveScanSearch.py
 
-[![asciicast](https://asciinema.org/a/242421.svg)](https://asciinema.org/a/242421)
+[![asciicast](https://asciinema.org/a/242579.svg)](https://asciinema.org/a/242579)
 
 > ioSearchDownloadScans.py
 
