@@ -13,7 +13,7 @@
 #	  structure: 	Get the latest history and queue up the nessus file
 #				        Write to a file to pick up in a few minutes from IO
 #
-#   usage:      -scan ScanNameToSearch -type nessus | csv
+#   usage:      -scan ScanNameToSearch -o nessus | csv
 #
 #   notes:      fill in the following variables as needed per environment
 #               put_files       <-- Where do you want the exports to download
@@ -43,8 +43,8 @@ hello +='#                                                 *this may take a whil
 hello +='##########################################################################\n'
 
 scanError = 'Error:  Scan did not run.\n'
-usage = 'usage python ioDownloadScans.py -scan ScanNametoSearch (encompass spaces in search in quotes) -type nessus | csv\n'
-intermission ='Requests sent.\nNo errors received.\nExport of results is queued up.\nInitiating download...'
+usage = 'usage python ioDownloadScans.py -scan ScanNametoSearch (encompass spaces in search in quotes) -o nessus | csv\n'
+intermission ='Requests sent.\nNo errors received.\nExport of results is queued up.\nInitiating download...\nThis can take a while.'
 
 args = argv[1:]
 
@@ -59,11 +59,11 @@ if args[0] == '-scan':
   sscan = args[1]
   stype = 'nessus'
 
-if args[2] != '-type':
+if args[2] != '-o':
   print(scanError+usage)
   sys.exit(1)
 
-if args[2] == '--type':
+if args[2] == '-o':
   if args[3] != 'csv' and args[3] != 'nessus':
     print('Scan output type options are csv and nessus.\n'+usage)
     exit()
