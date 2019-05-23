@@ -99,6 +99,8 @@ def create_search(file,q):
     for line in queryFile:
         lineStripped = line.strip()
         if query in apiFilter.keys():
+            if query == 'hostname':
+                lineStripped = lineStripped.lower()
             searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'+str(x)+'.quality":"'+apiFilter[query][1]+'","filter.'+str(x)+'.value":"'+lineStripped+'",'
         else:
             print('We are currently not searching on '+query+'.  You can make it happen by updating the script, or choose from one of of our predefined query options.')
@@ -155,7 +157,9 @@ if args[4] == '-q':
 searchT = ''
 if args[6] == '-d':
     if query in apiFilter.keys():
-        searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+args[7].strip()+'",'
+        if query == 'hostname':
+                lineStripped = lineStripped.strip().lower()
+        searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+lineStripped+'",'
     else:
         print('!!!! Query error for a single data point.  We should have caught this earlier.')
         exit()
