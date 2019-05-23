@@ -1,6 +1,6 @@
 > ioInteractiveScanSearch.py
 
-Think ioSearchScansQueue3.py but interactive. 
+Think ioSearchDownloadScans.py but interactive. 
 
 Run the scan search, answer some questions and download in one interactive script.  *usage* `python3 ioInteractiveScanSearch.py`
 
