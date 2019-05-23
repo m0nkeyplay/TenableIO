@@ -12,9 +12,10 @@
 #               sk              <-- Secret Key
 #               proxies         <-- If you use a proxy, set it here.
 #
-#   updates:    random file for queuing added so things can be done more than one time
+#   updates:    +random file for queuing added so things can be done more than one time
 #               also added the timecode to the results so they don't overwrite when using this more often and files 
 #               stil in downloads folder
+#               +lowered the case for hostnames, since IO lowers them and search seems to be case sensitive
 
 import requests
 import json
@@ -113,6 +114,8 @@ def create_search(file,q):
     for line in queryFile:
         lineStripped = line.strip()
         if query in apiFilter.keys():
+            if query == 'hostname':
+                lineStripped = lineStripped.lower()
             searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'
             searchFor += str(x)+'.quality":"'+apiFilter[query][1]+'","filter.'
             searchFor += str(x)+'.value":"'+lineStripped+'",'
@@ -249,6 +252,8 @@ searchT = ''
 if dts == 'datapoint':
     criteria = input('Great. What is your datapoint: ')
     if query in apiFilter.keys():
+        if query == 'hostname':
+            criteria = criteria.lower()
         searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'
         searchT += apiFilter[query][1]+'","filter.0.value":"'+criteria.strip()+'",'
 elif dts == 'file':
