@@ -158,7 +158,9 @@ searchT = ''
 if args[6] == '-d':
     if query in apiFilter.keys():
         if query == 'hostname':
-                lineStripped = lineStripped.strip().lower()
+            lineStripped = args[7].strip().lower()
+        else:
+            lineStripped = args[7].strip()     
         searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+lineStripped+'",'
     else:
         print('!!!! Query error for a single data point.  We should have caught this earlier.')
