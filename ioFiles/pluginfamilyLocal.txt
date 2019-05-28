@@ -1,0 +1,27 @@
+AIX Local Security Checks
+Amazon Linux Local Security Checks
+CentOS Local Security Checks
+Debian Local Security Checks
+F5 Networks Local Security Checks
+Fedora Local Security Checks
+FreeBSD Local Security Checks
+Gentoo Local Security Checks
+HP-UX Local Security Checks
+Huawei Local Security Checks
+Junos Local Security Checks
+MacOS X Local Security Checks
+Mandriva Local Security Checks
+Netware
+Oracle Linux Local Security Checks
+OracleVM Local Security Checks
+Palo Alto Local Security Checks
+PhotonOS Local Security Checks
+Red Hat Local Security Checks
+Scientific Linux Local Security Checks
+Slackware Local Security Checks
+Solaris Local Security Checks
+SuSE Local Security Checks
+Ubuntu Local Security Checks
+VMware ESX Local Security Checks
+Virtuozzo Local Security Checks
+Windows
