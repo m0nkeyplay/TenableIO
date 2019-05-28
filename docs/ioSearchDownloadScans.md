@@ -11,14 +11,15 @@ Query filters are listed below. Add as needed in a dictionary in the script.
 3. hostname
 4. riskfactor
 5. compliancecheck  
+6. pluginfamily
 
 *usage* `python3 ioSearchDownloadScans.py -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file`
 
 ******switchs:******    
 
-               -scan       Search this specific scan 
+               -scan       Search this specific scan
                -o          Output Type options:  nessus, csv
-               -q          Query Type options:  pluginid, pluginname, hostname, riskfactor, compliancecheck
+               -q          Query Type options:  pluginid, pluginname, hostname, riskfactor, compliancecheck, pluginfamily
                -d or -f    -d for one...   example: -q pluginid -d 19506
                                            example: -q pluginid -f /path/to/file/with/a/list/of/pluginids              
 

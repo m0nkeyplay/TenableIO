@@ -71,7 +71,7 @@ usage = '\n usage% python3 ioSearchDownloadScans.py'
 usage += ' -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file\n'
 usage += '\nswitchs:\n-scan       Search this specific scan *see below '
 usage += '\n-o          Output Type options:  nessus, csv'
-usage += '\n-q          Query Type options:  pluginid, pluginname, hostname, riskfactor, compliancecheck'
+usage += '\n-q          Query Type options:  pluginid, pluginfamily, pluginname, hostname, riskfactor, compliancecheck'
 usage += '\n-d or -f    '
 usage += '\n            -d for one...   example: -q pluginid -d 19506'
 usage += '\n            -f for file...  example: -q pluginid -f /path/to/file/with/a/list/of/pluginids'
@@ -86,6 +86,7 @@ searchError = 'Error: We need either a data point or a file to search through.\n
 apiFilter = {}
 apiFilter['pluginid'] = ('plugin.id','eq')
 apiFilter['pluginname'] = ('plugin.name','match')
+apiFilter['pluginfamily'] = ('plugin.family','eq')
 apiFilter['hostname'] = ('host.hostname','match')
 apiFilter['riskfactor'] = ('plugin.attributes.risk_factor','eq')
 apiFilter['compliancecheck'] = ('compliance_description','match')
@@ -160,7 +161,7 @@ if args[6] == '-d':
         if query == 'hostname':
             lineStripped = args[7].strip().lower()
         else:
-            lineStripped = args[7].strip()     
+            lineStripped = args[7].strip()
         searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+lineStripped+'",'
     else:
         print('!!!! Query error for a single data point.  We should have caught this earlier.')

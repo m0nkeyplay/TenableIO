@@ -13,7 +13,7 @@
 #               proxies         <-- If you use a proxy, set it here.
 #
 #   updates:    +random file for queuing added so things can be done more than one time
-#               also added the timecode to the results so they don't overwrite when using this more often and files 
+#               also added the timecode to the results so they don't overwrite when using this more often and files
 #               stil in downloads folder
 #               +lowered the case for hostnames, since IO lowers them and search seems to be case sensitive
 
@@ -56,6 +56,7 @@ status_error_message += 'https://cloud.tenable.com/api#/resources/scans/export-s
 apiFilter = {}
 apiFilter['pluginid'] = ('plugin.id','eq')
 apiFilter['pluginname'] = ('plugin.name','match')
+apiFilter['pluginfamily'] = ('plugin.family','eq')
 apiFilter['hostname'] = ('host.hostname','match')
 apiFilter['riskfactor'] = ('plugin.attributes.risk_factor','eq')
 apiFilter['compliancecheck'] = ('compliance_description','match')
