@@ -52,24 +52,24 @@ args = argv[1:]
 #   Ways to make a sanity check are appreciated
 if len(args) < 4:
   print
-  sys.exit(1)
-
+  exit()
+  
 sscan = ''
 if args[0] == '-scan':
   sscan = args[1]
-  stype = 'nessus'
+  outputType = 'nessus'
 
 if args[2] != '-o':
   print(scanError+usage)
-  sys.exit(1)
+  exit(1)
 
 if args[2] == '-o':
   if args[3] != 'csv' and args[3] != 'nessus':
     print('Scan output type options are csv and nessus.\n'+usage)
     exit()
   else:
-    stype = args[3]
-    print('Output will be: '+stype)
+    outputType = args[3]
+    print('Output will be: '+outputType)
 
 
 # 	Need an app and secret key for the API to work
@@ -113,7 +113,7 @@ report_data += '"filter.0.filter":"plugin.id","filter.0.quality":"eq","filter.0.
 report_data += ',"filter.1.filter":"severity","filter.1.quality":"eq","filter.1.value":"Critical"'
 report_data += ',"filter.2.filter":"severity","filter.2.quality":"eq","filter.2.value":"High"'
 report_data += ',"filter.3.filter":"severity","filter.3.quality":"eq","filter.3.value":"Medium"'
-report_data += ',"filter.search_type":"or","format":"'+stype+'"}'
+report_data += ',"filter.search_type":"or","format":"'+outputType+'"}'
 
 def scan_history(url,s_name,scan_id):
   r = requests.get(url, proxies=proxies, headers=headers)
@@ -131,13 +131,17 @@ def scan_history(url,s_name,scan_id):
         s_status = h["status"]
         post_url = url+'/export?history_id='+h_id
         p = requests.post(post_url, proxies=proxies, headers=headers, data=report_data)
-        file_data = p.json()
-        report_file = str(file_data["file"])
-        pickUp_file.write(s_name+','+scan_id+','+report_file+','+stype)
-        break
+        if p.status_code == 200:
+            file_data = p.json()
+            report_file = str(file_data["file"])
+            pickUp_file.write(s_name+','+scan_id+','+report_file+','+outputType+'\n')
+            break
+        else:
+            print('The request to IO failed and reported the following error:')
+            print(p.status_code)
+            break
   else:
-    print(scanError+usage)
-    exit()
+    print('There was no history to get data from.')
 
 # 	Status Check
 def status_check(scan,file):
