@@ -1,0 +1,5 @@
+Info
+Low
+Medium
+High
+Critical

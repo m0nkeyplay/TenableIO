@@ -1,42 +1,79 @@
 # TenableIO
-Tenable.io has a lot of things that can be done with the API.  https://cloud.tenable.com/api#/overview  It also has a lot of things that can only be done in the API. 
+Tenable.io has a lot of things that can be done with the API.  https://cloud.tenable.com/api#/overview  It also has a lot of things that can only be done in the API.
 
-Here we have a collection of scripts to take care of things I need to deal with on a regular basis:  getting data from scans, checking on scan status and finding out who is owning the scans.
-
-There are three ways to search and download scan data:  ``ioDownloadScans.py`` will get you anything that is not info in your scan choice while ``ioSearchDownloadScans.py`` and ``ioInteractiveScanSearch.py`` allow for more granular search parameters in a format you like, switch based for cron based jobs or interactive for need it now fire drills.
-
-Some people don't like to check things that can be automated.  This is why I wrote ``check-stopScans3.py``.  I was tired or forgetting to see if out scans stopped by 7am.  This does it or me, stops them and logs if anything needed to be stopped.
-
-Do you have questions about what's going on with a scan?  With ``owners3.py`` we can see who is the owner of a scan and bug them to find out what it's doing.
-
+These scripts deal with getting data from scans.  We can search and download results from the scans interactively or set up with all the data in switches (for a cron job maybe?)
 
 Use at will.  Make better at will.  There are variables that need to be set in each file.  Make sure to check that out, otherwise errors abound!
 
-#### May 28, 2019 - Updates to ioInteractiveScanSearch.py and ioSearchDownloadScans.py
+> ioSearchDownloadScans.py
 
-Added plugin Family to search options
+**Search for one or a list of plugins/hostnames/risk factors/compliance checks in a scan or multiple scans and then download them.**  
+This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py and ioExportScanQueue3.py are good to queue up for a nighltly download - this is geared more to a fire drill.  When done, download the results with the script below.
 
-Created some canned files for searching located in ioFiles/  These are named by the query type then what they are searching on
-
-Files using python 2.6 are noted as ending in 2.6.  All others tested in 3.5+.
-
-#### To do:
-
-Break out keys and specific functions to an include file so we don't need to put the info in each files.
-
-Parse the data from a compliance scan.
-
-Create a report based on workbenches
+Query filters are listed below. Add as needed in a dictionary in the script.
 
 
-### Popular scripts in action
+1. pluginid
+2. pluginname
+3. hostname
+4. riskfactor
+5. compliancecheck  
+6. pluginfamily
 
-Read Me files located in the docs/ directory
+*usage* `python3 ioSearchDownloadScans.py -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file`
+
+******switchs:******    
+
+               -scan       Search this specific scan
+               -o          Output Type options:  nessus, csv
+               -q          Query Type options:  pluginid, pluginname, hostname, riskfactor, compliancecheck, pluginfamily
+               -d or -f    -d for one...   example: -q pluginid -d 19506
+                                           example: -q pluginid -f /path/to/file/with/a/list/of/pluginids              
+
+******notes:******      fill in the following variables as needed per environment
+
+               pickup_file     <-- Where the export data goes to be picked up
+               ak              <-- Access Key
+               sk              <-- Secret Key
+               proxies         <-- If you use a proxy, set it here.
+
+
+[![asciicast](https://asciinema.org/a/242426.svg)](https://asciinema.org/a/242426)
 
 > ioInteractiveScanSearch.py
 
+Think ioSearchDownloadScans.py but interactive.
+
+Run the scan search, answer some questions and download in one interactive script.  *usage* `python3 ioInteractiveScanSearch.py`
+
+   notes:      fill in the following variables as needed per environment before you get started
+
+               put_Files       <-- Where do you want the exports to downloads
+                                   Default is the downloads folder associated with the repo
+               ak              <-- Access Key
+               sk              <-- Secret Key
+               proxies         <-- If you use a proxy, set it here.
+
 [![asciicast](https://asciinema.org/a/242579.svg)](https://asciinema.org/a/242579)
 
-> ioSearchDownloadScans.py
+#### Updates
 
-[![asciicast](https://asciinema.org/a/242426.svg)](https://asciinema.org/a/242426)
+June 2019:
+
++ Cleaned out unused scripts and documents
+
++ Added riskfactor file to ioFiles
+
+May 2019:
+
++ Added plugin Family to search options
+
++ Created some canned files for searching located in ioFiles/  These are named by the query type then what they are searching on
+
+#### To do:
+
++ Break out keys and specific functions to an include file so we don't need to put the info in each files.
+
++ Parse the data from a compliance scan.
+
++ Create a report based on workbenches
