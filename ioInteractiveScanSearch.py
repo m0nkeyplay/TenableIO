@@ -1,4 +1,4 @@
-#!usr/bin/python3
+#!/usr/bin/env python3
 #
 #
 # 	author:  	https://github.com/m0nkeyplay/
@@ -80,8 +80,8 @@ cwd = os.getcwd()
 workingFile = timecode+'.txt'
 #   These need to be uncommented and completed before first run
 #put_files = cwd+'/downloads/' # Change or keep
-#ak = get_key('') # Fill me in
-#sk = get_key('') # Fill me in
+ak = get_key('') # Fill me in
+sk = get_key('') # Fill me in
 
 # Leave this one alone Please
 pickUp_file = open(cwd+'/'+workingFile, 'w')
