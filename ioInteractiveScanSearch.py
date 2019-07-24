@@ -80,8 +80,8 @@ cwd = os.getcwd()
 workingFile = timecode+'.txt'
 #   These need to be uncommented and completed before first run
 #put_files = cwd+'/downloads/' # Change or keep
-ak = get_key('') # Fill me in
-sk = get_key('') # Fill me in
+#ak = get_key('') # Fill me in
+#sk = get_key('') # Fill me in
 
 # Leave this one alone Please
 pickUp_file = open(cwd+'/'+workingFile, 'w')
@@ -297,8 +297,8 @@ for line in get_files:
             download_report(download,r_name,ftype)
             break
          else:
-            print('The scan is still loading...  We will check again in 10 seconds.\n')
-            time.sleep(10)
+            print('The scan is still loading...  We will check again in 2 minutes.\n')
+            time.sleep(120)
 
 print('Files are downloaded and pieced together. Pick them up in '+put_files)
 # Clean Up
