@@ -308,8 +308,8 @@ for line in get_files:
             download_report(download,r_name,ftype)
             break
          else:
-            print('The scan is still loading...  We will check again in 10 seconds.\n')
-            time.sleep(10)
+            print('The scan is still loading...  We will check again in 2 minutes.\n')
+            time.sleep(120)
 
 print('Files are downloaded and pieced together. Pick them up in '+put_files)
 # Clean Up
