@@ -25,6 +25,14 @@ import datetime
 import shutil
 from sys import argv
 from datetime import timedelta
+import signal
+
+#   CTRL+C handler - from https:/gist.github.com/mikerr/6389549
+def handler(signum, frame):
+    print("\n^^^^^^Task aborted by user.  Some cleanup may be necessary.")
+    exit(0)
+
+signal.signal(signal.SIGINT,handler)
 
 #   Chatter
 
