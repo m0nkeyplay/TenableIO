@@ -33,7 +33,15 @@ import time
 import datetime
 import shutil
 from sys import argv
+import signal
 from datetime import timedelta
+
+#   CTRL+C handler - from https:/gist.github.com/mikerr/6389549
+def handler(signum, frame):
+    print("\n^^^^^^Task aborted by user.  Some cleanup may be necessary.")
+    exit(0)
+
+signal.signal(signal.SIGINT,handler)
 
 # 	Need an app and secret key for the API to work
 #   This grabs the key from a file and puts it below
@@ -238,7 +246,7 @@ def scan_history(url,s_name,scan_id):
             break
 
   else:
-    print('We should put a log here to say why it did not work...')
+    print('No data for this scan - creating 1k file.  Will fix...')
 
 # 	Status Check
 def status_check(scan,file):
