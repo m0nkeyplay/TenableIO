@@ -5,10 +5,15 @@ These scripts deal with getting data from scans.  We can search and download res
 
 Use at will.  Make better at will.  There are variables that need to be set in each file.  Make sure to check that out, otherwise errors abound!
 
+> scanNames.py
+**This script will pull the scan names you need to run the rest of the scripts.**
+
+*usage* `python scanNames.py 'word in scan name'` for a search  `python scanNames.py` for a full list of scan names
+
 > ioSearchDownloadScans.py
 
 **Search for one or a list of plugins/hostnames/risk factors/compliance checks in a scan or multiple scans and then download them.**  
-This one came about because people needed specific plugin/hostname info on a large scale, quickly.  More query options will be coming soon.  While ioExportQueue26.py and ioExportScanQueue3.py are good to queue up for a nighltly download - this is geared more to a fire drill.  When done, download the results with the script below.
+This one came about because people needed specific plugin/hostname info on a large scale, quickly.  This is geared toward a regular download of scan data.
 
 Query filters are listed below. Add as needed in a dictionary in the script.
 
@@ -44,7 +49,10 @@ Query filters are listed below. Add as needed in a dictionary in the script.
 
 Think ioSearchDownloadScans.py but interactive.
 
-Run the scan search, answer some questions and download in one interactive script.  *usage* `python3 ioInteractiveScanSearch.py`
+Run the scan search, answer some questions and download in one interactive script.  Think when the boss comes and asks how many Macs are running the Critcal version of Chrome?  (pluginid 103649	Google Chrome < 61.0.3163.110 Multiple Vulnerabilities (macOS))
+
+
+*usage* `python3 ioInteractiveScanSearch.py`
 
    notes:      fill in the following variables as needed per environment before you get started
 
@@ -57,6 +65,12 @@ Run the scan search, answer some questions and download in one interactive scrip
 [![asciicast](https://asciinema.org/a/242579.svg)](https://asciinema.org/a/242579)
 
 #### Updates
+
+July 2019:
+
++ added scanNames.py
+
++ cleaned up errors reporting in scripts
 
 June 2019:
 
