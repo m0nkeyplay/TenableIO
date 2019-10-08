@@ -33,15 +33,16 @@ import time
 import datetime
 import shutil
 from sys import argv
-import signal
 from datetime import timedelta
+import argparse
 
-#   CTRL+C handler - from https:/gist.github.com/mikerr/6389549
-def handler(signum, frame):
-    print("\n^^^^^^Task aborted by user.  Some cleanup may be necessary.")
-    exit(0)
-
-signal.signal(signal.SIGINT,handler)
+ap = argparse.ArgumentParser()
+ap.add_argument("-scan", "--scan", required=True, help="Search this specific scan")
+ap.add_argument("-o", "--output", required=True, help="Output Type options: csv or nessus")
+ap.add_argument("-q", "--queryFor", required=True, help="Query For Options: pluginid, pluginname, hostname, riskfactor, compliancecheck")
+ap.add_argument("-d", "--datapoint", required=False, help="Datapoint: example: -q pluginid -d 19506")
+ap.add_argument("-f", "--file", required=False, help="get the datapoints from a file -f /path/to/file")
+args = vars(ap.parse_args())
 
 # 	Need an app and secret key for the API to work
 #   This grabs the key from a file and puts it below
@@ -59,33 +60,30 @@ def file_date(udate):
 
 #   Chatter
 
-hello = '##########################################################################\n'
-hello +='#                                                                        #\n'
-hello +='#                              Tenable IO Scan                           #\n'
-hello +='#                            Search and Download                         #\n'
-hello +='#                                                                        #\n'
-hello +='#                                                                        #\n'
-hello +='##########################################################################\n'
+hello = '''##########################################################################
+#                                                                        #
+#                              Tenable IO Scan                           #
+#                            Search and Download                         #
+#                                                                  |     #
+#                                                                 /|\~es #
+##########################################################################\n'''
 
-holdOnCowboy = '++++ It looks like the environment isn\'t set up yet.'
-holdOnCowboy +='\nPlease set up the environmental variables first. (put_files, ak, and sk)\n'
-holdOnCowboy +='Once those are set you should be on your way.'
+holdOnCowboy = '''++++ It looks like the environment isn\'t set up yet.
+\nPlease set up the environmental variables first. (put_files, ak, and sk)
+Once those are set you should be on your way.'''
 
 intermission ='Requests sent.\nNo errors received.\nExport of results is queued up.\nInitiating download...'
 
-#goodbye ='No errors received.\nExport of results is queued up.\nIn a few minutes run ioExportDownload3.py and you should get the data you need.'
-
-usage = '\n usage% python3 ioSearchDownloadScans.py'
-usage += ' -scan ScanNametoSearch -o nessus|csv -q filterQuery -d datapoint | -f /path/to/file\n'
-usage += '\nswitchs:\n-scan       Search this specific scan *see below '
-usage += '\n-o          Output Type options:  nessus, csv'
-usage += '\n-q          Query Type options:  pluginid, pluginfamily, pluginname, hostname, riskfactor, compliancecheck'
-usage += '\n-d or -f    '
-usage += '\n            -d for one...   example: -q pluginid -d 19506'
-usage += '\n            -f for file...  example: -q pluginid -f /path/to/file/with/a/list/of/pluginids'
-usage+=  '\n            *anything with a space needs to be quoted - double quotes if running on Windows'
-
 searchError = 'Error: We need either a data point or a file to search through.\n'
+
+status_error_message =  '''We received an error while checking the export status.
+This is different than IO still building your request.
+Check the error message below at the API website.
+https://cloud.tenable.com/api#/resources/scans/export-status'''
+
+#   Variables
+
+outputTypes = ['csv','nessus']
 
 #   Dictionary of API filters to search on
 #   Structure - [what are we getting from the user] (tenable calls it,how to search it)
@@ -110,7 +108,9 @@ def create_search(file,q):
         if query in apiFilter.keys():
             if query == 'hostname':
                 lineStripped = lineStripped.lower()
-            searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]+'","filter.'+str(x)+'.quality":"'+apiFilter[query][1]+'","filter.'+str(x)+'.value":"'+lineStripped+'",'
+            searchFor += '"filter.'+str(x)+'.filter":"'+apiFilter[query][0]
+            searchFor += '","filter.'+str(x)+'.quality":"'+apiFilter[query][1]
+            searchFor += '","filter.'+str(x)+'.value":"'+lineStripped+'",'
         else:
             print('We are currently not searching on '+query+'.  You can make it happen by updating the script, or choose from one of of our predefined query options.')
             exit()
@@ -118,78 +118,59 @@ def create_search(file,q):
     queryFile.close()
     return searchFor
 
-
-
-#   Check the input data
-#   Needs a good sanity check
-#   Right now data is required in specific order.  We don't all work that way
-
-args = argv[1:]
-if len(args) < 8:
-  print('!!!!! We are missing some things here.')
-  print(usage)
-  exit(1)
-
-#   Scan Name
-#   Spaces need to be in quotes
-#   Double quotes if run on Windows
-sscan = ''
-if args[0] == '-scan':
-  sscan = args[1].strip()
-
-#   Output Type
-if args[2] != '-o':
-  print('!!!!! Output switch is needed -o')
-  print(usage)
-  exit()
-
-if args[2] == '-o':
-  if args[3] != 'csv' and args[3] != 'nessus':
-    print('!!!!! Scan output type options are csv and nessus.')
-    print(usage)
+#   Input Data
+sscan = args["scan"].strip()
+stype = args["output"].strip()
+if stype not in outputTypes:
+    print(stype+' is not a supported output type. Please use a supported output type.')
+    for x in outputTypes:
+      print('     -o '+x)
     exit()
-  else:
-    stype = args[3].strip()
 
-#   What we are querying.  This will grow
-query = ''
-if args[4] == '-q':
-    if args[5] not in apiFilter.keys():
-        print('!!!!! Query not supported.  Please use a supported query.')
-        print(usage)
-        exit()
-    else:
-        query = args[5].strip()
+if args["queryFor"] not in apiFilter.keys():
+    print('Query not supported.  Please use a supported query.')
+    for k in apiFilter:
+        print('     -q '+k)
+    exit()
+else:
+    query = args["queryFor"].strip()
 
 # Data point or File
 # Remember that dictionary.  We are using it here too.
 searchT = ''
-if args[6] == '-d':
-    if query in apiFilter.keys():
-        if query == 'hostname':
-            lineStripped = args[7].strip().lower()
-        else:
-            lineStripped = args[7].strip()
-        searchT = '"filter.0.filter":"'+apiFilter[query][0]+'","filter.0.quality":"'+apiFilter[query][1]+'","filter.0.value":"'+lineStripped+'",'
-    else:
-        print('!!!! Query error for a single data point.  We should have caught this earlier.')
-        exit()
-elif args[6] == '-f':
-    sFile = args[7]
-    searchT = create_search(sFile,query)
-else:
-    print(searchError)
-    print(usage)
-    exit()
-
+try:
+  args["datapoint"]
+  if query in apiFilter.keys():
+      if query == 'hostname':
+          lineStripped = args["datapoint"].strip().lower()
+      else:
+          lineStripped = args["datapoint"].strip()
+      searchT = '"filter.0.filter":"'+apiFilter[query][0]+'",'
+      searchT += '"filter.0.quality":"'+apiFilter[query][1]+'",'
+      searchT += '"filter.0.value":"'+lineStripped+'",'
+  else:
+      print('!!!! Query error for a single data point.  We should have caught this earlier.')
+      exit()
+except:
+  args["file"]
+  if not os.path.isfile(args["file"]):
+      print('File is not where we have been told to look.  Exiting.')
+      exit() 
+  else:
+    sFile = args["file"]
+    searchT = create_search(sFile,query)    
+   
 # Some more variables to help this along
 timecode = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 cwd = os.getcwd()
 workingFile = timecode+'.txt'
 #   These need to be uncommented and completed before first run
 #put_files = cwd+'/downloads/' # Change or keep
-#ak = get_key('') # Fill me in
-#sk = get_key('') # Fill me in
+# Fill these in with the path to your files with the keys
+# Or just remove the function and put your key in there.  
+# Up to you.
+#ak = get_key('')
+#sk = get_key('')
 
 # Leave this one alone Please
 pickUp_file = open(cwd+'/'+workingFile, 'w')
@@ -246,7 +227,7 @@ def scan_history(url,s_name,scan_id):
             break
 
   else:
-    print('No data for this scan - creating 1k file.  Will fix...')
+    print('We should put a log here to say why it did not work...')
 
 # 	Status Check
 def status_check(scan,file):
@@ -316,8 +297,8 @@ for line in get_files:
             download_report(download,r_name,ftype)
             break
          else:
-            print('The scan is still loading...  We will check again in 2 minutes.\n')
-            time.sleep(120)
+            print('The scan is still loading...  We will check again in 10 seconds.\n')
+            time.sleep(10)
 
 print('Files are downloaded and pieced together. Pick them up in '+put_files)
 # Clean Up
